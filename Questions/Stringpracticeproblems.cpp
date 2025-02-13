@@ -2,6 +2,7 @@
 #include<string>
 #include<algorithm>
 #include<sstream>
+#include<vector>
 using namespace std;
 int main () {
 
@@ -51,5 +52,21 @@ int main () {
 
 
     // // Input a string of length less than 10 and convert it into integer without using builtin function.
-
+    cout<<"Enter the number: ";
+    string str;
+    cin>>str;
+    vector<int> v;
+    int pos = 0;
+    for(int i=0; i<str.length(); i++) {
+        if(str[i]!='0') {
+            pos = i;
+            break;
+        } 
+    }
+    for(int i=pos; i<str.length(); i++) {
+        v.push_back((str[i]-'0'));
+    }
+    for(int i=0; i<v.size(); i++) {
+        cout<<(v[i]);
+    }
 }
