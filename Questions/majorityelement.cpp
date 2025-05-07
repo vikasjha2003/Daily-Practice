@@ -72,6 +72,13 @@ using namespace std;
 //     return ans;
 // }
 
+// LESS LINE OF CODE
+
+// int majority (vector<int> nums) {
+//     sort(nums.begin(), nums.end());
+//     return nums[nums.size()/2]; // majority element will be middle element
+// }
+
 // BEST (MOORE'S ALGO)
     int majority (vector<int> nums) {
         int count = 0;
