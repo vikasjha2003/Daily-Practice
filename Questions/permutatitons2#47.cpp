@@ -16,32 +16,56 @@ vector<int> helparray (vector<int> &a, int b) {
     return v;
 }
 
+// void helper (vector<int> ans, vector<int> &nums, vector<vector<int>> &final, bool flag) {
+//     if(0 == nums.size()) {
+//         if(final.size()<1) {
+//             final.push_back(ans);
+//             return;
+//         } else {
+//             if(final[final.size()-1]!=ans) {
+//                 final.push_back(ans);
+//                 return;
+//             }
+//         }
+//     }
+//     for(int i = 0; i<nums.size(); i++) {
+//         if(i<nums.size()-1 && nums[i] == nums[i+1]) {
+//             ans.push_back(nums[i]);
+//             vector<int> v = helparray(nums,i);
+//             helper(ans,v,final,false);
+//             ans.pop_back();
+//         } else {
+//             ans.push_back(nums[i]);
+//             vector<int> v = helparray(nums,i);
+//             if (flag == true) helper(ans,v,final,true);
+//             ans.pop_back();
+//         }
+//     }
+// }
+
+// A better approach to deal with duplicates
+
 void helper (vector<int> ans, vector<int> &nums, vector<vector<int>> &final, bool flag) {
-    if(0 == nums.size()) {
-        if(final.size()<1) {
-            final.push_back(ans);
-            return;
-        } else {
-            if(final[final.size()-1]!=ans) {
+        if(0 == nums.size()) {
+            if(final.size()<1) {
                 final.push_back(ans);
                 return;
+            } else {
+                if(final[final.size()-1]!=ans) {
+                    final.push_back(ans);
+                    return;
+                }
             }
         }
-    }
-    for(int i = 0; i<nums.size(); i++) {
-        if(i<nums.size()-1 && nums[i] == nums[i+1]) {
+        for(int i = 0; i<nums.size(); i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
             ans.push_back(nums[i]);
             vector<int> v = helparray(nums,i);
             helper(ans,v,final,false);
             ans.pop_back();
-        } else {
-            ans.push_back(nums[i]);
-            vector<int> v = helparray(nums,i);
-            if (flag == true) helper(ans,v,final,true);
-            ans.pop_back();
+        
         }
     }
-}
 
 vector<vector<int>> permute(vector<int>& nums) {
     sort(nums.begin(),nums.end());
