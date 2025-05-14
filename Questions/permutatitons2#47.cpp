@@ -5,7 +5,7 @@ using namespace std;
 
 // permutations 2, self done :)  
 
-vector<int> helparray (vector<int> &a, int b) {
+vector<int> sumarray (vector<int> &a, int b) {
     vector<int> v ;
     for(int i = 0; i<a.size(); i++) {
         if(i==b) continue;
@@ -60,7 +60,7 @@ void helper (vector<int> ans, vector<int> &nums, vector<vector<int>> &final, boo
         for(int i = 0; i<nums.size(); i++) {
             if (i > 0 && nums[i] == nums[i - 1]) continue;
             ans.push_back(nums[i]);
-            vector<int> v = helparray(nums,i);
+            vector<int> v = sumarray(nums,i);
             helper(ans,v,final,false);
             ans.pop_back();
         
