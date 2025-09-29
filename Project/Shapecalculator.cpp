@@ -89,7 +89,7 @@ public:
 class ellipse : public shape {
     double a, b;
 public:
-    ellipse(double x, double y) : a(a), b(b) {}
+    ellipse(double x, double y) : a(x), b(y) {}
     double area() const override {
         return M_PI*a*b;
     }
