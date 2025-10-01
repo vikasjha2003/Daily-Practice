@@ -7,6 +7,11 @@ void reverse(vector<int> &arr, int n , int i) {
     swap(arr[i],arr[n]);
     reverse(arr,--n,++i);
 }
+void reverse(vector<int> &arr, int i) {
+    if(i>=arr.size()/2) return;
+    swap(arr[i], arr[arr.size()-i-1]);
+    reverse(arr,i+1);
+}
 void print(int n) {
     if(n==0) return;
     cout<<n<<" "; // reverse order
@@ -19,10 +24,10 @@ int main () {
         cout<<q<<" ";
     } 
     cout<<endl;
-    print(v.size());
-    // reverse(v,v.size()-1,0);
-    // for(int q : v) {
-    //     cout<<q<<" ";
-    // } 
-    // cout<<endl;
+     // print(v.size());
+    reverse(v,0);
+    for(int q : v) {
+        cout<<q<<" ";
+    } 
+    cout<<endl;
 }
