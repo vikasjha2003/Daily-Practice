@@ -53,6 +53,24 @@ int prod(node* root) {
     if(root ==  NULL) return 1;
     return root->val * prod(root->lc) * prod (root->rc);
 }
+void displayn(node* root, int level, int n) {
+    if(root == NULL) { // in case n is more then tree size
+        cout<<"Level does not exist in tree";
+        return;
+    } else if(level == n) {
+        cout<<root->val<<" ";
+        return;
+    }
+    displayn(root->lc,level+1,n);
+    displayn(root->rc,level+1,n);
+}
+void levelorder(node* root) {
+    int n = level(root);
+    for (int i = 1; i<=n; i++) {
+        displayn(root,1,i);
+        cout<<endl;
+    }
+}
 int main () {
     // prerequisites - Recursion and linked list
     node * a = new node(1);
@@ -75,4 +93,8 @@ int main () {
     cout<<"Number of levels are "<<level(a)<<endl;
     cout<<"Min is "<<mini(a)<<endl;
     cout<<"Product is "<<prod(a)<<endl;
+    cout<<"The third level is: "<<endl;
+    displayn(a,1,3);
+    cout<<endl;
+    levelorder(a);
 }

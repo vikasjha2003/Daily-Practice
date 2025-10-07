@@ -41,6 +41,7 @@ vector<string> stri(string json1, string json2) {
 int main () {
     string json1 = "{\"Name\":\"Alex\",\"Age\":\"25\",\"country\":\"africa\"}";
     string json2 = "{\"Name\":\"Alex\",\"Age\":\"35\",\"state\":\"africa\"}";
+    cout<<json1<<endl<<json2<<endl<<endl;
     // output should be "Age";
     vector<string> v = stri(json1,json2);
     for(string q : v) {
