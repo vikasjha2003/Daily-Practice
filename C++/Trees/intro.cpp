@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 class node {
     public:
@@ -71,6 +72,17 @@ void levelorder(node* root) {
         cout<<endl;
     }
 }
+void levelorderiterate(node* root) { // iterative level order traversal
+    queue<node*> q;
+    q.push(root);
+    while(q.size() > 0) {
+        node* a = q.front();
+        cout<<a->val<<" ";
+        q.push(a->lc);
+        q.push(a->rc);
+        q.pop();
+    }
+}
 int main () {
     // prerequisites - Recursion and linked list
     node * a = new node(1);
@@ -96,5 +108,5 @@ int main () {
     cout<<"The third level is: "<<endl;
     displayn(a,1,3);
     cout<<endl;
-    levelorder(a);
+    levelorderiterate(a);
 }
