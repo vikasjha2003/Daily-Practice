@@ -1,6 +1,7 @@
 #include<iostream>
 #include<queue>
-#include<queue>
+#include<stack>
+#include<algorithm>
 using namespace std;
 class node {
     public:
@@ -15,7 +16,6 @@ class node {
 
 // RECURSIVE
 
-// DFS
 void preorder(node* root, vector<int> &ans) {
     if(!root) return;
     ans.push_back(root->val);
@@ -34,7 +34,6 @@ void postorder(node* root, vector<int> &ans) {
     postorder(root->right,ans);
     ans.push_back(root->val);
 }
-// BFS
 int size(node* root) {
     if(!root) return 0;
     return max(size(root->left),size(root->right)) + 1;
@@ -68,8 +67,44 @@ void levelorderit(node* root, vector<int> &ans) {
     }
 }
 void preorderit(node* root, vector<int> &ans) {
-    
+    stack<node*> st;
+    if(root) st.push(root);
+    while(!st.empty()) {
+        node* temp = st.top();
+        st.pop();
+        ans.push_back(temp->val);
+        if(temp->right) st.push(temp->right);
+        if(temp->left) st.push(temp->left);
+    }
 }
+void inorderit(node* root, vector<int> &ans) {
+    stack<node*> st;
+    node* root1 = root;
+    while(!st.empty() || root1) {
+        if(root1) {
+            st.push(root1);
+            root1 = root1->left;
+        } else {
+            node* temp = st.top();
+            st.pop();
+            ans.push_back(temp->val);
+            root1 = temp->right;
+        }
+    }
+}
+void postorderit(node* root, vector<int> &ans) {
+    stack<node*> st;
+    if(root) st.push(root);
+    while(!st.empty()) {
+        node* temp = st.top();
+        st.pop();
+        ans.push_back(temp->val);
+        if(temp->left) st.push(temp->left);
+        if(temp->right) st.push(temp->right);
+    }
+    reverse(ans.begin(), ans.end());
+}
+
 int main () {
     // tree creation
     node * a = new node(1);
@@ -87,8 +122,7 @@ int main () {
     c->right = g;
     // store traversals
     vector<int> display;
-    // preorder(a,display);
-    levelorderit(a,display);
+    inorderit(a,display);
     for(int i : display) {
         cout<<i<<" ";
     } cout<<endl;
