@@ -105,6 +105,53 @@ void postorderit(node* root, vector<int> &ans) {
     reverse(ans.begin(), ans.end());
 }
 
+// Boundary traversal 
+
+void leftTraversal(node* root,vector<int> &v){
+    if(root==NULL) return;
+    if(root->left==NULL && root->right==NULL) return;
+    v.push_back(root->val);
+    if(root->left){
+        leftTraversal(root->left,v);   
+    }else{
+        leftTraversal(root->right,v);   
+    }
+}
+void leafTraversal(node* root,vector<int> &v){
+    if(root==NULL) return;
+    if(root->left==NULL && root->right==NULL){
+        v.push_back(root->val);
+        return;
+    }
+    leafTraversal(root->left,v);
+    leafTraversal(root->right,v);
+}
+void rightTraversal(node* root,vector<int> &v){
+    if(root==NULL) return;
+    if(root->left==NULL && root->right==NULL) return;
+    if(root->right){
+        rightTraversal(root->right,v);   
+    }else{
+        rightTraversal(root->left,v);   
+    }
+    v.push_back(root->val);
+}
+vector<int> boundaryTraversal(node *root) {
+    // code here
+    vector<int> v;
+    if(root==NULL) return v;
+    v.push_back(root->val);
+    if(root->left==NULL && root->right==NULL) return v;
+    if(root->left){
+        leftTraversal(root->left,v);
+    }
+    leafTraversal(root,v);
+    if(root->right){
+        rightTraversal(root->right,v);
+    }
+    return v;
+}
+
 int main () {
     // tree creation
     node * a = new node(1);
@@ -122,7 +169,8 @@ int main () {
     c->right = g;
     // store traversals
     vector<int> display;
-    inorderit(a,display);
+    // inorderit(a,display);
+    display = boundaryTraversal(a);
     for(int i : display) {
         cout<<i<<" ";
     } cout<<endl;
