@@ -151,7 +151,38 @@ vector<int> boundaryTraversal(node *root) {
     }
     return v;
 }
-
+void allin1Traversal(node *root) {
+    stack<pair<node*,int>> st;
+    st.push({root,1});
+    if(!root) return;
+    vector<int> pre , in, post;
+    while(!st.empty()) {
+        auto it = st.top();
+        st.pop();
+        if(it.second == 1) {
+            pre.push_back(it.first->val);
+            it.second++;
+            st.push(it);
+            if(it.first->left) st.push({it.first->left,1});
+        } else if (it.second == 2) {
+            in.push_back(it.first->val);
+            it.second++;
+            st.push(it);
+            if(it.first->right) st.push({it.first->right,1});
+        } else {
+            post.push_back(it.first->val);
+        }
+    }
+    for(int i : pre) {
+        cout<<i<<" ";
+    } cout<<endl;
+    for(int i : in) {
+        cout<<i<<" ";
+    } cout<<endl;
+    for(int i : post) {
+        cout<<i<<" ";
+    } cout<<endl;
+}
 int main () {
     // tree creation
     node * a = new node(1);
@@ -170,8 +201,9 @@ int main () {
     // store traversals
     vector<int> display;
     // inorderit(a,display);
-    display = boundaryTraversal(a);
-    for(int i : display) {
-        cout<<i<<" ";
-    } cout<<endl;
+    // display = boundaryTraversal(a);
+    // for(int i : display) {
+    //     cout<<i<<" ";
+    // } cout<<endl;
+    allin1Traversal(a);
 }
