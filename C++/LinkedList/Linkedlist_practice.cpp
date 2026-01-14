@@ -2,28 +2,28 @@
 #include<vector>
 using namespace std;
 
-class Node {
+class ListNode {
 public : 
     int val;
-    Node* next;
-    Node (int val) {
+    ListNode* next;
+    ListNode (int val) {
         this->val = val;
         next = NULL;
     }
 };
 
-Node* createLinkedList(const vector<int>& arr) {
+ListNode* createLinkedList(const vector<int>& arr) {
     if (arr.empty()) return NULL;
-    Node* head = new Node(arr[0]);
-    Node* temp = head;
+    ListNode* head = new ListNode(arr[0]);
+    ListNode* temp = head;
     for (int i = 1; i < arr.size(); i++) {
-        temp->next = new Node(arr[i]);
+        temp->next = new ListNode(arr[i]);
         temp = temp->next;
     }
     return head;
 }
 
-void printLinkedList(Node* head) {
+void printLinkedList(ListNode* head) {
     while (head) {
         cout << head->val << " -> ";
         head = head->next;
@@ -31,34 +31,51 @@ void printLinkedList(Node* head) {
     cout << "NULL\n";
 }
 
-class Solution { // to write all the codes from leetcode directly
-public:
-
-    Node* reverseList(Node* head) {
-        Node* prev = nullptr;
-        Node* curr = head;
-
-        while (curr) {
-            Node* Node = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = Node;
+    ListNode* reverseList_iter(ListNode* head) {
+        if(!head->next || !head) return head;
+        ListNode* temp1 = head -> next;
+        ListNode* temp2 = temp1 -> next;
+        while(head) {
+            temp1 -> next = head;
+            head = temp1;
+            temp1 = temp2;
         }
-        return prev;
+        return head;
     }
 
+    ListNode* reverseList_rec(ListNode* head) {
+        if(head == NULL || head -> next == NULL) return head;
+        ListNode* temp = reverseList_rec(head->next);
+        head -> next -> next = head;
+        head -> next = NULL;
+        return temp;
+    }
 
-};
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast && fast->next) {
+            slow = slow->next;
+            fast = fast -> next -> next;
+        }
+        return slow;
+    }
 
 int main () {
     vector<int> input = {4,5,7,8};
-    Node* head = createLinkedList(input);
-    // print the old list
+    ListNode* head = createLinkedList(input);
+    ListNode* res = head;
+    
     cout << "Original List:\n";
     printLinkedList(head);
-    Solution obj;
-    head = obj.reverseList(head);
-    // print new list
+
+
+    // head = reverseList_rec(head);
+    head = reverseList_iter(head);
+
+    // res = middleNode(head);
+    // cout<<res->val;
+
     cout << "After Operation:\n";
     printLinkedList(head);
 }
