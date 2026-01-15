@@ -1,5 +1,4 @@
-#include<iostream>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 class ListNode {
@@ -123,6 +122,105 @@ void printLinkedList(ListNode* head) {
             fast = fast -> next -> next;
         }
         return slow;
+    }
+
+    bool isPalindrome(ListNode* head) {
+        // if(head -> next == NULL) return true;
+        // stack<ListNode*> st;
+        // ListNode* slow = head;
+        // ListNode* fast = head;
+        // st.push(slow);
+        // while(fast && fast->next) {
+        //     slow = slow -> next;
+        //     fast = fast -> next -> next;
+        //     st.push(slow);
+        // }
+        // st.pop();
+        // if(fast != NULL) slow = slow -> next;
+        // while(slow) {
+        //     if(st.top() -> val != slow -> val) return false;
+        //     slow = slow -> next;
+        //     st.pop();
+        // }
+        // return true;
+
+        if(head -> next == NULL) return true;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast && fast->next) {
+            slow = slow -> next;
+            fast = fast -> next -> next;
+        }
+        if(fast != NULL) slow = slow -> next;
+        slow = reverseList_iter(slow);
+        while(slow) {
+            if(head->val != slow -> val) return false;
+            head = head -> next;
+            slow = slow -> next;
+        }
+        return true;
+    }
+
+    ListNode* deleteMiddle(ListNode* head) {
+        if(!head || !head -> next) return NULL;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* lag = NULL;
+        while(fast && fast->next) {
+            lag = slow;
+            slow = slow -> next;
+            fast = fast -> next -> next;
+        }
+        lag -> next = slow -> next;
+        delete slow;
+        return head;
+    }
+
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        // if(!head || !head -> next) return NULL;
+        // ListNode* temp = head;
+        // int count = 0;
+        // while(temp) {
+        //     count++;
+        //     temp = temp -> next;
+        // }
+        // ListNode* dummy = new ListNode(-1);
+        // dummy -> next = head;
+        // temp = dummy;
+        // for(int i = 0; i< count - n; i++) {
+        //     temp = temp -> next;
+        // }
+        // temp -> next = temp -> next -> next;
+        // return dummy -> next;
+
+        if(!head || !head -> next) return NULL;
+        ListNode* dummy = new ListNode(-1);
+        dummy -> next = head;
+        ListNode* slow = dummy;
+        ListNode* fast = slow;
+        int gap = 0;
+        while(fast -> next) {
+            fast = fast -> next;
+            gap++;
+            if(gap > n) slow = slow -> next;
+        }
+        slow -> next = slow -> next -> next;
+        return dummy -> next;
+    }
+
+    ListNode* oddEvenList(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode* odd = head;
+        ListNode* even = head -> next;
+        ListNode* store = head -> next;
+        while(even && even -> next) {
+            odd -> next = even -> next;
+            odd = odd -> next;
+            even -> next = odd -> next;
+            even = even -> next;
+        }
+        odd -> next = store;
+        return head;
     }
 
 int main () {
