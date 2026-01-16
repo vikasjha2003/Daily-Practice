@@ -319,6 +319,76 @@ void printLinkedList(ListNode* head) {
         return temp1;   
     }
 
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(k == 1) return head;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* temp1 = dummy;
+        ListNode* temp = head;
+        while(temp) {
+            int i = 1;
+            ListNode* prev_node = temp;
+            ListNode* next_node = NULL;
+            while(i<k && temp) {
+                temp = temp -> next;
+                i++;
+            }
+            if(temp) {
+                next_node = temp -> next;
+                temp -> next = NULL;
+                temp1 -> next = reverseList_rec(prev_node);
+                temp1 = prev_node;
+                temp1 -> next = NULL;
+                temp = next_node;
+            } else {
+                temp1-> next = prev_node;
+            }
+        }
+        return dummy->next;
+    }
+
+        ListNode* rotateRight(ListNode* head, int k) {
+        if(head == NULL) return head;
+        ListNode* temp = head;
+        int n = 1;
+        while(temp->next!=NULL) {
+            n++;
+            temp = temp->next;
+        }
+        k = k%n;
+        ListNode* temp1 = head;
+        for(int i = 1; i<n-k; i++) {
+            temp1 = temp1->next;
+        }
+        temp->next = head;
+        temp = temp1->next;
+        temp1->next = NULL;
+        return temp;
+    }
+
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* temp = dummy;
+        while(head && head -> next) {
+            if(head -> next -> val != head -> val) {
+                temp -> next = head;
+                temp = head;
+                head = head -> next;
+            } else {
+                int x = head -> val;
+                while(head && head -> val == x) {
+                    head = head -> next;
+                }
+            }
+        }
+        if(head) {
+            temp -> next = head;
+            temp = temp -> next;
+        }
+        temp -> next = NULL;
+        return dummy-> next;
+    }
+
 int main () {
     vector<int> input = {4,5,7,8};
     ListNode* head = createLinkedList(input);
