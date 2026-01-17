@@ -430,7 +430,6 @@ void printLinkedList(ListNode* head) {
 int main () {
     vector<int> input = {4,5,7,8};
     ListNode* head = createLinkedList(input);
-    ListNode* res = head;
     
     cout << "Original List:\n";
     printLinkedList(head);
