@@ -388,6 +388,44 @@ void printLinkedList(ListNode* head) {
         temp -> next = NULL;
         return dummy-> next;
     }
+    
+    // ListNode *flatten(ListNode *root) {
+    //     if(!root || (!root->next && !root->bottom)) return root;
+    //     ListNode* dummy = new ListNode(-1);
+    //     ListNode* dummy1 = dummy;
+    //     while(root) {
+    //         ListNode* temp = root;
+    //         root = root -> next;
+    //         while(temp) {
+    //             dummy -> bottom = temp;
+    //             dummy = temp;
+    //             temp = temp -> bottom;
+    //         }
+    //     }
+    //     return sortList(dummy1 -> bottom);
+    // }
+
+    // ListNode* copyRandomList(ListNode* head) {
+    //     if(!head) return NULL;
+    //     unordered_map<ListNode*,ListNode*> mpp;
+    //     ListNode* dummy = new ListNode(-1);
+    //     ListNode* duplicate = dummy;
+    //     ListNode* temp = head;
+    //     mpp[NULL] = NULL;
+    //     while (temp) {
+    //         mpp[temp] = new ListNode(temp->val);
+    //         temp = temp -> next;            
+    //     }
+    //     temp = head;
+    //     while(temp) {
+    //         duplicate -> next = mpp[temp];
+    //         duplicate = duplicate -> next;
+    //         duplicate -> next = mpp[temp->next];
+    //         duplicate -> random = mpp[temp -> random];
+    //         temp = temp -> next;
+    //     }
+    //     return dummy -> next;
+    // }
 
 int main () {
     vector<int> input = {4,5,7,8};
