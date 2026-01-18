@@ -35,3 +35,36 @@ using namespace std;
 // }
 
 // CORRECT APPROACH FOR THIS PROBLEM USING GREEDY
+
+int main() {
+    int n; // number of invaders
+    cin>>n;
+    vector<vector<int>> pairs; // arrival time and distance
+    priority_queue <int, vector<int> , greater<int>> pq;
+    unordered_set<int> st;
+    while(n--) {
+        int arr , depart , dist;
+        cin>>arr>>depart>>dist;
+        pairs.push_back({arr,depart,dist});
+        st.insert(depart);
+        pq.push(depart);
+    }
+    int m = pairs.size();
+    sort(pairs.begin(), pairs.end());
+    int i = 0;
+    int fuel = 0;
+    while(!pq.empty()) {
+        int departure = pq.top();
+        pq.pop();
+        if(st.find(departure) == st.end()) continue;
+        int max_dist = 0;
+        while(i<m && pairs[i][0] <= departure) {
+            st.erase(pairs[i][1]);
+            max_dist = max(max_dist,pairs[i][2]);
+            i++;
+        }
+        fuel += max_dist;
+        if(i>=m) break;
+    }
+    cout<<fuel;
+}
