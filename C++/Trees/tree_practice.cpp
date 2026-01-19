@@ -58,6 +58,85 @@ void printTree(TreeNode* root) {
     cout << "\n";
 }
 
+    int pathl(TreeNode* root,int &maxi) {
+        if(root == NULL) return 0;
+        int l = pathl(root->left,maxi);
+        int r = pathl(root->right,maxi);
+        maxi = max(maxi,l+r);
+        return max(l,r) +1;
+    }
+
+    int sumi(TreeNode* root, int & sum) {
+        if(!root) return 0;
+        int l = max(0,sumi(root->left,sum));
+        int r = max(0,sumi(root->right,sum));
+        sum = max(sum,l + r + root->val);
+        return root->val + max(l,r);
+    }
+
+    int balance(TreeNode* root, bool &flag) {
+        if(!root) return 0;
+        int l = balance(root->left,flag);
+        int r = balance(root->right,flag);
+        if(abs(l - r) > 1) flag = false;
+        return max (l,r) + 1;
+    } 
+
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p == NULL && q == NULL) return true;
+        if(p == NULL || q == NULL) return false;
+        if(p -> val != q -> val) return false;
+        return isSameTree(p -> left, q -> left) && isSameTree(p -> right , q -> right);
+    }
+
+    // Boundary traversal 
+
+    void leftTraversal(TreeNode* root,vector<int> &v){
+        if(root==NULL) return;
+        if(root->left==NULL && root->right==NULL) return;
+        v.push_back(root->val);
+        if(root->left){
+            leftTraversal(root->left,v);   
+        }else{
+            leftTraversal(root->right,v);   
+        }
+    }
+    void leafTraversal(TreeNode* root,vector<int> &v){
+        if(root==NULL) return;
+        if(root->left==NULL && root->right==NULL){
+            v.push_back(root->val);
+            return;
+        }
+        leafTraversal(root->left,v);
+        leafTraversal(root->right,v);
+    }
+    void rightTraversal(TreeNode* root,vector<int> &v){
+        if(root==NULL) return;
+        if(root->left==NULL && root->right==NULL) return;
+        if(root->right){
+            rightTraversal(root->right,v);   
+        }else{
+            rightTraversal(root->left,v);   
+        }
+        v.push_back(root->val);
+    }
+    vector<int> boundaryTraversal(TreeNode* root) {
+        vector<int> v;
+        if(root==NULL) return v;
+        v.push_back(root->val);
+        if(root->left==NULL && root->right==NULL) return v;
+        if(root->left){
+            leftTraversal(root->left,v);
+        }
+        leafTraversal(root,v);
+        if(root->right){
+            rightTraversal(root->right,v);
+        }
+        return v;
+    }
+
+    
+
 int main() {
     vector<int> arr = {3, 9, 20, -1, -1, 15, 7};
 
