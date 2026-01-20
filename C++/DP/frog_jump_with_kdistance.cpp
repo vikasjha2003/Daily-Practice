@@ -8,25 +8,20 @@ using namespace std;
 
 // Return the minimum amount of energy required by the frog to go from the 0th step to the (n-1)th step.
 
-int solve(vector<int> & heights, int k, int energy, int idx, vector<int> & dp) {
-    if(idx >= heights.size() - 1) {
-        return energy;
-    }
-    if(dp[idx] != -1) return energy + dp[idx];
+int solve(vector<int> & heights, int k, int idx, vector<int> & dp) {
+    if(idx >= heights.size() - 1) return 0;
+    if(dp[idx] != -1) return dp[idx];
     int min_energy = INT_MAX;
     for(int i = 1; i<= k && (idx + i < heights.size()); i++) {
-        energy += abs(heights[idx] - heights[idx + i]);
-        int ret = solve(heights,k,energy,idx+i,dp);
-        energy -= abs(heights[idx] - heights[idx + i]);
-        min_energy = min(min_energy,ret - energy);
+        int ret = abs(heights[idx] - heights[idx+i]) + solve(heights,k,idx+i,dp);
+        min_energy = min(min_energy,ret);
     }
-    dp[idx] = min_energy;
-    return energy + dp[idx];
+    return dp[idx] = min_energy;
 }
 
 int frogJump(vector<int>& heights, int k) {
     vector<int> dp(heights.size(),-1);
-    return solve(heights,k,0,0,dp);
+    return solve(heights,k,0,dp);
 }
 
 int main () {
