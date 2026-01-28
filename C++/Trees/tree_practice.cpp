@@ -135,7 +135,46 @@ void printTree(TreeNode* root) {
         return v;
     }
 
-    
+    vector<int> bottomView(Node *root) {
+        map<int,pair<int,int>> mpp;
+        queue<pair<Node*,pair<int,int>>> q;
+        vector<int> v;
+        q.push({root,{0,0}});
+        while(!q.empty()) {
+            auto it = q.front();
+            q.pop();
+            if(mpp.find(it.second.first) == mpp.end()) mpp[it.second.first] = {it.first->data,it.second.second};
+            else {
+                if(mpp[it.second.first].second <= it.second.second) mpp[it.second.first] = {it.first->data,it.second.second};
+            }
+            if(it.first->left) q.push({it.first->left,{it.second.first - 1, it.second.second +1}});
+            if(it.first->right) q.push({it.first->right,{it.second.first + 1, it.second.second +1}});
+        }
+        for(auto q : mpp) {
+            v.push_back(q.second.first);
+        }
+        return v;
+    }
+
+    vector<int> topView(Node *root) {
+        map<int,int> mpp;
+        queue<pair<Node*,int>> q;
+        vector<int> v;
+        q.push({root,0});
+        while(!q.empty()) {
+            auto it = q.front();
+            q.pop();
+            if(mpp.find(it.second) == mpp.end()) {
+                mpp[it.second] = it.first->data;
+            }
+            if(it.first->left) q.push({it.first->left,it.second - 1});
+            if(it.first->right) q.push({it.first->right,it.second + 1});
+        }
+        for(auto q : mpp) {
+            v.push_back(q.second);
+        }
+        return v;
+    }
 
 int main() {
     vector<int> arr = {3, 9, 20, -1, -1, 15, 7};
