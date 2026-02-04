@@ -69,6 +69,66 @@ public:
 
 };
 
+    bool isCycle(int n, vector<vector<int>>& edges) { // cycle in graph BFS
+        vector<vector<int>> adj (n);
+        for(auto edge : edges) {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        vector<bool> visited (n,false);
+        for(int start = 0; start < n; start++) {
+            if(!visited[start]) {
+                queue<pair<int,int>> q;
+                visited[start] = true;
+                q.push({start,-1});
+                while(!q.empty()) {
+                    auto node = q.front();
+                    q.pop();
+                    for(int i : adj[node.first]) {
+                        if(i == node.second) continue;
+                        if(visited[i] == true) return true;
+                        else {
+                            visited[i] = true;
+                            q.push({i,node.first});
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // DFS Solution for cycle in graph
+
+    bool DFS (vector<vector<int>>& edges , vector<bool> &visited , int prev, int node) {
+        for(int i = 0; i<edges[node].size(); i++) {
+            if(edges[node][i] == prev) continue;
+            if(visited[edges[node][i]] == true) return true;
+            else {
+                visited[edges[node][i]] = true;
+                if(DFS(edges, visited , node, edges[node][i])) return true;
+            }
+            
+        }
+        return false;
+    }
+    
+    bool isCycle(int n, vector<vector<int>>& edges) {
+        vector<vector<int>> adj (n);
+        for(auto edge : edges) {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        vector<bool> visited (n,false);
+        for(int start = 0; start < n; start++) {
+            if(!visited[start]) {
+                visited[start] = true;
+                if(DFS(adj , visited , -1 ,start)) return true;
+            }
+        }
+        return false;
+    }
+
 int main () {
     vector<vector<int>> input = {
         {1},{0,2,3},{1,4},{1},{2,5},{4}
