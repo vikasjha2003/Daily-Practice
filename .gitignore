@@ -1,0 +1,15 @@
+# C++ files
+*.exe
+*.out
+*.o
+
+# Java files
+*.class
+
+# VS Code / IDE
+.vscode/
+.idea/
+*.iml
+
+# OS junk
+.DS_Store
