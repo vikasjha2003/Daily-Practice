@@ -1,12 +1,11 @@
-package java.dsa.arrays.one_d_arrays;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class basic {
     public static void main (String [] args) {
         Scanner sc = new Scanner(System.in);
 
         int arr[] = new int[5];
+        System.out.println(arr[0]); // default value will be 0
 
         for(int i = 0; i<5; i++) {
             arr[i] = sc.nextInt();
