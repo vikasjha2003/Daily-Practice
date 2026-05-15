@@ -17,9 +17,10 @@ coding-workspace/
 │   └── revision/       # Quick revision code snippets
 │
 ├── java/               # Java learning and practice
-│   ├── basics/
-│   ├── oop/
-│   └── dsa/
+│   ├── basics/         # Syntax, fundamentals
+│   ├── oop/            # Object-Oriented Programming
+│   ├── dsa/            # DSA practice in Java 
+│   └── projects        # Small projects for learning
 │
 ├── misc/               # Experimental or old code
 │
